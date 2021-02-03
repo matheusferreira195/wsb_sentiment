@@ -14,7 +14,7 @@ def wsb_comment_sentiment(wsb, X,Y):
             Y.append(y_vec)
             X.append(x_vec)
 
-            break
+            #break
 
 def create_wsb_client():
     
