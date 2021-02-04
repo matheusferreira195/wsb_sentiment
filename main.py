@@ -7,8 +7,8 @@ import dash_html_components as html
 import plotly
 import plotly.graph_objs as go
 from collections import deque
-from wsb import wsb_comment_sentiment, create_wsb_client
-from gme_data import gme_stock_price
+from apps.wsb import wsb_comment_sentiment, create_wsb_client
+from apps.gme_data import gme_stock_price
 
 wsb = create_wsb_client()
 
