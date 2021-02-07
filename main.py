@@ -7,8 +7,10 @@ import dash_html_components as html
 import plotly
 import plotly.graph_objs as go
 from collections import deque
-from apps.wsb import wsb_comment_sentiment, create_wsb_client
+from apps.wsb import wsb_comment_sentiment, create_wsb_client, wsb_get_comments
 from apps.gme_data import gme_stock_price
+from database import Db
+import threading
 
 wsb = create_wsb_client()
 
@@ -20,19 +22,26 @@ app.layout = html.Div(
         dcc.Graph(id='live-graph', animate=True),
         dcc.Interval(
             id='graph-update',
-            interval=1*1000
+            interval=60*1000
         ),
     ]
 )
 
+db_wsb = Db()
+
+thread_wsb = threading.Thread(target=wsb_comment_sentiment, args=(wsb, db_wsb))
+thread_wsb.start()
+
 X = deque(maxlen=20)
 Y = deque(maxlen=20)
+db = Db()
 
 @app.callback(Output('live-graph', 'figure'),
               [Input('graph-update', 'n_intervals')])
+
 def update_graph_scatter(input_data):
 
-    wsb_comment_sentiment(wsb, X, Y)
+    wsb_get_comments(db, X,Y)
 
     data = plotly.graph_objs.Scatter(
             x=list(X),

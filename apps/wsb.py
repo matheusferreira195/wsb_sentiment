@@ -1,20 +1,33 @@
 import praw
 from textblob import TextBlob
 import datetime
+from models.wsb_comments import WsbComments
 
-def wsb_comment_sentiment(wsb, X,Y):
+def wsb_get_comments(db, X, Y):
+    data = db.query_wsb()
+
+    X.append(data[0][1])
+    Y.append(data[0][0])
+
+def wsb_comment_sentiment(wsb, db):
     for comment in wsb.stream.comments():
-        if comment.link_author == 'AutoModerator' and 'Daily' in comment.link_title:
+        if comment.link_author == 'OPINION_IS_UNPOPULAR' and 'Weekend' in comment.link_title:
 
             analysis = TextBlob(comment.body)
 
-            y_vec = analysis.sentiment.polarity
-            x_vec = datetime.datetime.now()
+            wsb_comment = WsbComments(
+                comment.id,
+                comment.body,
+                comment.link_title,
+                comment.author.name,
+                comment.ups,
+                0,
+                analysis.polarity,
+                analysis.subjectivity,
+                comment.created
+            )
 
-            Y.append(y_vec)
-            X.append(x_vec)
-
-            #break
+            db.insert_wsb_comment(wsb_comment)
 
 def create_wsb_client():
     
