@@ -1,5 +1,6 @@
 import psycopg2
 import psycopg2.extras
+import pandas as pd
 
 class Db:
     def __init__(self):
@@ -33,4 +34,10 @@ class Db:
         self.conn.commit()
         cursor.close()
         
+        return data
+    def query_wsb_table(self, period=1):
+        query = f"""SELECT TRIM(body) as body,sentiment as polarity,subjectivity,created_at FROM data.wsb_comments WHERE 1=1 AND created_at >= current_timestamp - INTERVAL '{period} minutes' ORDER BY created_at DESC"""
+
+        data = pd.read_sql_query(query, self.conn)
+
         return data

@@ -2,6 +2,7 @@ import praw
 from textblob import TextBlob
 import datetime
 from models.wsb_comments import WsbComments
+import pandas as pd
 
 def wsb_get_comments(db, X, Y):
     data = db.query_wsb()
@@ -24,7 +25,7 @@ def wsb_comment_sentiment(wsb, db):
                 0,
                 analysis.polarity,
                 analysis.subjectivity,
-                comment.created
+                comment.created_utc
             )
 
             db.insert_wsb_comment(wsb_comment)
@@ -42,3 +43,8 @@ def create_wsb_client():
     wsb = reddit_api.subreddit('wallstreetbets')
 
     return wsb
+
+def get_comments_table(db):
+    data = db.query_wsb_table()
+
+    return data
