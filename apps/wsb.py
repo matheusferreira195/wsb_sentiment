@@ -12,7 +12,7 @@ def wsb_get_comments(db, X, Y):
 
 def wsb_comment_sentiment(wsb, db):
     for comment in wsb.stream.comments():
-        if comment.link_author == 'OPINION_IS_UNPOPULAR' and 'Weekend' in comment.link_title:
+        if comment.link_author == 'OPINION_IS_UNPOPULAR' and 'Daily Discussion' in comment.link_title:
 
             analysis = TextBlob(comment.body)
 
