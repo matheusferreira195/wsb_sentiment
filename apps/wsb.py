@@ -25,7 +25,7 @@ def wsb_comment_sentiment(wsb, db):
                 0,
                 analysis.polarity,
                 analysis.subjectivity,
-                comment.created_utc.astimezone("America/Sao_Paulo")
+                comment.created_utc
             )
 
             db.insert_wsb_comment(wsb_comment)
