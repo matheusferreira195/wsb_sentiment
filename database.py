@@ -29,14 +29,14 @@ class Db:
     def query_wsb(self, period=1):
         cursor = self.conn.cursor(cursor_factory = psycopg2.extras.DictCursor)
         
-        cursor.execute(f"""SELECT AVG(sentiment) as sentiment_avg, (current_timestamp - INTERVAL '{period} minutes') as timestamp FROM wsb_comments WHERE 1=1 AND created_at >= current_timestamp - INTERVAL '{period} minutes'""")
+        cursor.execute(f"""SELECT AVG(sentiment) as sentiment_avg, ((current_timestamp - INTERVAL '{period} minutes') at time zone 'America/Fortaleza') as timestamp FROM wsb_comments WHERE 1=1 AND created_at >= current_timestamp - INTERVAL '{period} minutes'""")
         data = cursor.fetchall()
         self.conn.commit()
         cursor.close()
         
         return data
     def query_wsb_table(self, period=1):
-        query = f"""SELECT TRIM(body) as body,sentiment as polarity,subjectivity,created_at FROM wsb_comments WHERE 1=1 AND created_at >= current_timestamp - INTERVAL '{period} minutes' ORDER BY created_at DESC"""
+        query = f"""SELECT TRIM(body) as body,sentiment as polarity,subjectivity,created_at AT TIME ZONE 'America/Fortaleza' as created_at FROM wsb_comments WHERE 1=1 AND created_at >= current_timestamp - INTERVAL '{period} minutes' ORDER BY created_at DESC"""
 
         data = pd.read_sql_query(query, self.conn)
 
