@@ -96,7 +96,7 @@ def update_gme(input_data):
         high=stock_df['High'],
         low=stock_df['Low'],
         close=stock_df['Close'],
-         name='Scatter'
+        name='Scatter'
     )
 
     return {'data': [data],'layout' : go.Layout(xaxis=dict(range=[min(stock_df['Datetime']),max(stock_df['Datetime'])]))}
