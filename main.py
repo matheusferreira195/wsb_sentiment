@@ -121,4 +121,4 @@ def update_graph_scatter(input_data):
                                                 yaxis=dict(range=[min(Y_wsb),max(Y_wsb)]),)}
 
 if __name__ == '__main__':
-    app.run_server(host='0.0.0.0', port=8080 ,debug=False)
+    app.run_server(host='0.0.0.0', port=8080 ,debug=True)
