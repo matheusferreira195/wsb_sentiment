@@ -4,4 +4,4 @@ from collections import deque
 X = deque(maxlen=20)
 Y = deque(maxlen=20)
 
-gme_stock_price(X, Y)
+gme_stock_price()
