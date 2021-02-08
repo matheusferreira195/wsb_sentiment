@@ -84,23 +84,22 @@ def update_comments_table(input_data):
     df = get_comments_table(db)
     return df.to_dict(orient='records')
 
-X_gme = deque(maxlen=20)
-Y_gme = deque(maxlen=20)
+
 @app.callback(Output('gme-stock-graph', 'figure'),
               [Input('gme-update', 'n_intervals')])
 def update_gme(input_data):
-    gme_stock_price(X_gme,Y_gme)
+    stock_df = gme_stock_price()
 
-    data = plotly.graph_objs.Scatter(
-            x=list(X_gme),
-            y=list(Y_gme),
-            name='Scatter',
-            mode= 'lines+markers'
-            )
+    data = plotly.graph_objs.Candlestick(
+        x=stock_df['Datetime'],
+        open=stock_df['Open'],
+        high=stock_df['High'],
+        low=stock_df['Low'],
+        close=stock_df['Close'],
+         name='Scatter'
+    )
 
-    return {'data': [data],'layout' : go.Layout(xaxis=dict(range=[min(X_gme),max(X_gme)]),
-                                                yaxis=dict(range=[min(Y_gme),max(Y_gme)]),)}
-
+    return {'data': [data],'layout' : go.Layout(xaxis=dict(range=[min(stock_df['Datetime']),max(stock_df['Datetime'])]))}
 
 X_wsb = deque(maxlen=20)
 Y_wsb = deque(maxlen=20)

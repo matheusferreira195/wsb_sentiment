@@ -3,3 +3,8 @@ wsb_env/
 .idea/
 *.pyc
 Pipfile
+apps/__pycache__/gme_data.cpython-38.pyc
+
+__pycache__/database.cpython-38.pyc
+__pycache__/database.cpython-38.pyc
+__pycache__/
