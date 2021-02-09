@@ -117,7 +117,7 @@ def update_graph_scatter(input_data):
             mode= 'lines+markers'
             )
 
-    return {'data': [data],'layout' : go.Layout(xaxis=dict(range=[datetime.datetime.now() - datetime.timedelta(minutes=1),datetime.datetime.now()]), yaxis=dict(range=[min(Y_wsb),max(Y_wsb)]))}
+    return {'data': [data],'layout' : go.Layout(xaxis=dict(range=[datetime.datetime.now() - datetime.timedelta(minutes=10),datetime.datetime.now()]), yaxis=dict(range=[min(Y_wsb),max(Y_wsb)]))}
 
 if __name__ == '__main__':
     app.run_server(host='0.0.0.0', port=8080 ,debug=True)
