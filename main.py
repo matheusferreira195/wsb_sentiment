@@ -99,7 +99,7 @@ def update_gme(input_data):
         name='Scatter'
     )
 
-    return {'data': [data],'layout' : go.Layout(xaxis=dict(range=[min(stock_df['Datetime']),max(stock_df['Datetime'])]))}
+    return {'data': [data],'layout' : go.Layout(xaxis=dict(range=[datetime.datetime.now() - datetime.timedelta(minutes=1),datetime.datetime.now()]))}
 
 X_wsb = deque(maxlen=20)
 Y_wsb = deque(maxlen=20)
@@ -117,8 +117,7 @@ def update_graph_scatter(input_data):
             mode= 'lines+markers'
             )
 
-    return {'data': [data],'layout' : go.Layout(xaxis=dict(range=[min(X_wsb),max(X_wsb)]),
-                                                yaxis=dict(range=[min(Y_wsb),max(Y_wsb)]),)}
+    return {'data': [data],'layout' : go.Layout(xaxis=dict(range=[datetime.datetime.now() - datetime.timedelta(minutes=1),datetime.datetime.now()]), yaxis=dict(range=[min(Y_wsb),max(Y_wsb)]))}
 
 if __name__ == '__main__':
     app.run_server(host='0.0.0.0', port=8080 ,debug=True)
