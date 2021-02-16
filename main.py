@@ -1,4 +1,4 @@
-
+# -*- coding: utf-8 -*-
 import dash
 import datetime
 from dash.dependencies import Output, Input
